@@ -287,7 +287,7 @@ class Request extends AbstractRequest
             'postcode'   => $this->getPostcode(),
             'phone'      => $this->getPhone(),
             'country'    => $this->getCountry(),
-            'p_info'     => (int) $this->getAccountId(),
+            'p_info'     => $this->getPInfo(),
             'p_email'    => $this->getPEmail()
         );
 
