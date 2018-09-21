@@ -254,50 +254,45 @@ class Request extends AbstractRequest
         return $this->getParameter('status');
     }
 
-    public function purchase(array $parameters = array())
-    {
-        return $this->createRequest('\Omnipay\TwoCheckout\Message\Request', $parameters);
-    }
-
     public function getData()
     {
         $this->validate('amount');
 
         $data = array(
-            'id' => (int) $this->getAccountId(),
-            'amount' => (float) $this->getAmount(),
-            'currency' => $this->getCurrency(),
+            'id'          => (int) $this->getAccountId(),
+            'amount'      => (float) $this->getAmount(),
+            'currency'    => $this->getCurrency(),
             'description' => $this->getDescription(),
-            'lang' => $this->getLang(),
+            'lang'        => $this->getLang(),
             'api_version' => $this->getApiVersion()
         );
 
         $additional = array(
-            'channel' => $this->getChannel(),
-            'ch_lock' => $this->getChLock(),
-            'URL' => $this->getReturnUrl(),
-            'type' => (string) $this->getType(),
+            'channel'    => $this->getChannel(),
+            'ch_lock'    => $this->getChLock(),
+            'URL'        => $this->getReturnUrl(),
+            'type'       => (string) $this->getType(),
             'buttontext' => $this->getButtonText(),
-            'URLC' => $this->getNotifyUrl(),
-            'control' => $this->getControl(),
-            'firstname' => $this->getFirstName(),
-            'lastname' => $this->getLastName(),
-            'email' => $this->getEmail(),
-            'street' => $this->getStreet(),
-            'street_n1' => $this->getStreetN1(),
-            'street_n2' => $this->getStreetN2(),
-            'state' => $this->getState(),
-            'addr3' => $this->getAddr3(),
-            'city' => $this->getCity(),
-            'postcode' => $this->getPostcode(),
-            'phone' => $this->getPhone(),
-            'country' => $this->getCountry(),
-            'p_info' => (int) $this->getAccountId(),
-            'p_email' => $this->getPEmail()
+            'URLC'       => $this->getNotifyUrl(),
+            'control'    => $this->getControl(),
+            'firstname'  => $this->getFirstName(),
+            'lastname'   => $this->getLastName(),
+            'email'      => $this->getEmail(),
+            'street'     => $this->getStreet(),
+            'street_n1'  => $this->getStreetN1(),
+            'street_n2'  => $this->getStreetN2(),
+            'state'      => $this->getState(),
+            'addr3'      => $this->getAddr3(),
+            'city'       => $this->getCity(),
+            'postcode'   => $this->getPostcode(),
+            'phone'      => $this->getPhone(),
+            'country'    => $this->getCountry(),
+            'p_info'     => (int) $this->getAccountId(),
+            'p_email'    => $this->getPEmail()
         );
 
         foreach ($additional as $key => $value) {
-            if ($value!='') {
+            if ($value != '') {
                 $data[$key] = $value;
             }
         }
@@ -305,7 +300,8 @@ class Request extends AbstractRequest
         return $data;
     }
 
-    public function getPostData() {
+    public function getPostData()
+    {
 
     }
 

@@ -3,18 +3,18 @@
 namespace Omnipay\Dotpay;
 
 use Omnipay\Common\AbstractGateway;
+use Omnipay\Dotpay\Message\CompletePurchaseRequest;
 use Omnipay\Dotpay\Message\PurchaseRequest;
+use Omnipay\Dotpay\Message\Request;
 
 /**
  * Dotpay Gateway.
- *
  * @link https://ssl.dotpay.pl/s2/login/cloudfs1/magellan_media/common_file/55acab1fdadfce6f45d351ee/dotpay_instrukcja_techniczna_1.23.9.1_pl.pdf
  */
 class Gateway extends AbstractGateway
 {
     /**
      * Return name of gateway.
-     *
      * @return string
      */
     public function getName()
@@ -29,19 +29,18 @@ class Gateway extends AbstractGateway
     public function getDefaultParameters()
     {
         return array(
-            'accountId' => '',
-            'pid' => '',
-            'type' => '0',
-            'action' => 'https://ssl.dotpay.pl/test_payment/',
-            'lang' => 'pl',
+            'accountId'  => '',
+            'pid'        => '',
+            'type'       => '0',
+            'action'     => 'https://ssl.dotpay.pl/test_payment/',
+            'lang'       => 'pl',
             'apiVersion' => 'dev',
-            'channel' => 123
+            'channel'    => 123
         );
     }
 
     /**
      * Return account ID in Dotpay service.
-     *
      * @return int
      */
     public function getAccountId()
@@ -55,6 +54,7 @@ class Gateway extends AbstractGateway
      * maximal value 999999
      *
      * @param $value
+     *
      * @return $this
      */
     public function setAccountId($value)
@@ -64,7 +64,6 @@ class Gateway extends AbstractGateway
 
     /**
      * Get PIN for Dotpay.
-     *
      * @return string
      */
     public function getPid()
@@ -76,6 +75,7 @@ class Gateway extends AbstractGateway
      * Set PIN for Dotpay.
      *
      * @param $value
+     *
      * @return $this
      */
     public function setPid($value)
@@ -85,7 +85,6 @@ class Gateway extends AbstractGateway
 
     /**
      * Get `type` parametr for Dotpay service.
-     *
      * @return mixed
      */
     public function getType()
@@ -98,14 +97,12 @@ class Gateway extends AbstractGateway
      * Value of parameter affects the behavior of the {@link setReturnUrl()} parameter.
      * Available values:
      * 0 - After payment, the Purchaser will be made available return to the site of the Seller,
-     * 1 - After payment created an implicit connection to the Buyer. The address in the URL parameter will be sent (POST)
-     * the data presented in the chapter. AFTER RECEIVING PAYMENT INFORMATION (NOTICE URLC).
+     * 1 - After payment created an implicit connection to the Buyer. The address in the URL parameter will be sent
+     * (POST) the data presented in the chapter. AFTER RECEIVING PAYMENT INFORMATION (NOTICE URLC).
      * 2 - No response, nothing is sent, the lack of a button (default).
-     * 3 - shares will be performed for type = 0, and type = 1, ie. Both will be uploads the data presented in the chapter.
-     * AFTER RECEIVING INFORMATION
-     * PAYMENT (NOTIFICATION URLC) in conjunction closed (by POST) and displays the return to service
-     * Seller. If you use a notification mechanism
-     * URLC no need to use this value.
+     * 3 - shares will be performed for type = 0, and type = 1, ie. Both will be uploads the data presented in the
+     * chapter. AFTER RECEIVING INFORMATION PAYMENT (NOTIFICATION URLC) in conjunction closed (by POST) and displays
+     * the return to service Seller. If you use a notification mechanism URLC no need to use this value.
      * 4 - You will be redirected to the direct channel provider of payment
      * (Eg. The Bank), as well as the payment and logout
      * in the service provider channel Buyer will be redirected
@@ -114,6 +111,7 @@ class Gateway extends AbstractGateway
      * the payment channel and the respective side configuration dotpay.
      *
      * @param $value
+     *
      * @return $this
      */
     public function setType($value)
@@ -123,7 +121,6 @@ class Gateway extends AbstractGateway
 
     /**
      * Get url to Dotpay service.
-     *
      * @return mixed
      */
     public function getAction()
@@ -135,6 +132,7 @@ class Gateway extends AbstractGateway
      * Set url to Dotpay service.
      *
      * @param $value
+     *
      * @return $this
      */
     public function setAction($value)
@@ -144,7 +142,6 @@ class Gateway extends AbstractGateway
 
     /**
      * Set language for payment.
-     *
      * @return mixed
      */
     public function getLang()
@@ -156,6 +153,7 @@ class Gateway extends AbstractGateway
      * Get language of payment.
      *
      * @param $value
+     *
      * @return $this
      */
     public function setLang($value)
@@ -165,7 +163,6 @@ class Gateway extends AbstractGateway
 
     /**
      * Set api version.
-     *
      * @return mixed
      */
     public function getApiVersion()
@@ -178,6 +175,7 @@ class Gateway extends AbstractGateway
      * Default value is 'dev'.
      *
      * @param $value
+     *
      * @return $this
      */
     public function setApiVersion($value)
@@ -187,7 +185,6 @@ class Gateway extends AbstractGateway
 
     /**
      * Get channel payment.
-     *
      * @return mixed
      */
     public function getChannel()
@@ -197,9 +194,11 @@ class Gateway extends AbstractGateway
 
     /**
      * Set channel payment.
-     * More info in {@link https://ssl.dotpay.pl/s2/login/cloudfs1/magellan_media/common_file/55acab1fdadfce6f45d351ee/dotpay_instrukcja_techniczna_1.23.9.1_pl.pdf Dotpay documentation }
+     * More info in
+     * {@link https://ssl.dotpay.pl/s2/login/cloudfs1/magellan_media/common_file/55acab1fdadfce6f45d351ee/dotpay_instrukcja_techniczna_1.23.9.1_pl.pdf Dotpay documentation }
      *
      * @param $value
+     *
      * @return $this
      */
     public function setChannel($value)
@@ -209,21 +208,25 @@ class Gateway extends AbstractGateway
 
     /**
      * @inheritdoc
+     *
      * @param array $parameters
+     *
      * @return \Omnipay\Common\Message\AbstractRequest
      */
     public function purchase(array $parameters = array())
     {
-        return $this->createRequest('\Omnipay\Dotpay\Message\Request', $parameters);
+        return $this->createRequest(Request::class, $parameters);
     }
 
     /**
      * @inheritdoc
+     *
      * @param array $parameters
+     *
      * @return \Omnipay\Common\Message\AbstractRequest
      */
     public function completePurchase(array $parameters = array())
     {
-        return $this->createRequest('\Omnipay\Dotpay\Message\CompletePurchaseRequest', $parameters);
+        return $this->createRequest(CompletePurchaseRequest::class, $parameters);
     }
 }
