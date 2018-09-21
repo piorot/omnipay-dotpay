@@ -9,7 +9,6 @@ class CompletePurchaseRequest extends Request
 {
     /**
      * @inheritdoc
-     *
      * @return mixed
      */
     public function getData()
@@ -21,6 +20,7 @@ class CompletePurchaseRequest extends Request
      * @inheritdoc
      *
      * @param mixed $data
+     *
      * @return CompletePurchaseResponse
      */
     public function sendData($data)
