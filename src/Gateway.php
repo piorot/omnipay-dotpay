@@ -13,6 +13,12 @@ use Omnipay\Dotpay\Message\Request;
  */
 class Gateway extends AbstractGateway
 {
+    const PAYMENT_BUTTON_BACK_TYPE = 0;
+    const PAYMENT_BACK_POST_REQUEST_TYPE = 1;
+    const PAYMENT_REDIRECT_NONE_TYPE = 2;
+    const PAYMENT_BUTTON_BACK_AND_POST_REQUEST_TYPE = 3;
+    const PAYMENT_REDIRECT_TYPE = 4;
+    
     /**
      * Return name of gateway.
      * @return string
