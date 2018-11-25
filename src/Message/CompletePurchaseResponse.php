@@ -76,4 +76,12 @@ class CompletePurchaseResponse extends AbstractResponse
 
         return $this->data['status'] === self::STATUS_OK ? true : false;
     }
+
+    /**
+     * @return string|null
+     */
+    public function getTransactionReference()
+    {
+        return $this->data['operation_number'] ?? '';
+    }
 }
