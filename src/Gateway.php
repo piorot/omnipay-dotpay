@@ -213,6 +213,29 @@ class Gateway extends AbstractGateway
     }
 
     /**
+     * Get channel groups.
+     * @return mixed
+     */
+    public function getChannelGroups()
+    {
+        return $this->getParameter('channel_groups');
+    }
+
+    /**
+     * Set channel groups.
+     * More info in
+     * {@link https://ssl.dotpay.pl/s2/login/cloudfs1/magellan_media/common_file/55acab1fdadfce6f45d351ee/dotpay_instrukcja_techniczna_1.23.9.1_pl.pdf Dotpay documentation }
+     *
+     * @param $value
+     *
+     * @return $this
+     */
+    public function setChannelGroups($value)
+    {
+        return $this->setParameter('channel_groups', $value);
+    }
+
+    /**
      * @inheritdoc
      *
      * @param array $parameters

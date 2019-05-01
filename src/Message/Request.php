@@ -80,6 +80,16 @@ class Request extends AbstractRequest
         return $this->setParameter('channel', $value);
     }
 
+    public function getChannelGroups()
+    {
+        return $this->getParameter('channel_groups');
+    }
+
+    public function setChannelGroups($value)
+    {
+        return $this->setParameter('channel_groups', $value);
+    }
+
     public function getChLock()
     {
         return $this->getParameter('ch_lock');
@@ -260,36 +270,37 @@ class Request extends AbstractRequest
         $this->validate('amount');
 
         $data = array(
-            'id'          => (int) $this->getAccountId(),
-            'amount'      => (float) $this->getAmount(),
-            'currency'    => $this->getCurrency(),
+            'id' => (int)$this->getAccountId(),
+            'amount' => (float)$this->getAmount(),
+            'currency' => $this->getCurrency(),
             'description' => $this->getDescription(),
-            'lang'        => $this->getLang(),
+            'lang' => $this->getLang(),
             'api_version' => $this->getApiVersion()
         );
 
         $additional = array(
-            'channel'    => $this->getChannel(),
-            'ch_lock'    => $this->getChLock(),
-            'URL'        => $this->getReturnUrl(),
-            'type'       => (string) $this->getType(),
+            'channel' => $this->getChannel(),
+            'channel_groups' => $this->getChannelGroups(),
+            'ch_lock' => $this->getChLock(),
+            'URL' => $this->getReturnUrl(),
+            'type' => (string)$this->getType(),
             'buttontext' => $this->getButtonText(),
-            'URLC'       => $this->getNotifyUrl(),
-            'control'    => $this->getControl(),
-            'firstname'  => $this->getFirstName(),
-            'lastname'   => $this->getLastName(),
-            'email'      => $this->getEmail(),
-            'street'     => $this->getStreet(),
-            'street_n1'  => $this->getStreetN1(),
-            'street_n2'  => $this->getStreetN2(),
-            'state'      => $this->getState(),
-            'addr3'      => $this->getAddr3(),
-            'city'       => $this->getCity(),
-            'postcode'   => $this->getPostcode(),
-            'phone'      => $this->getPhone(),
-            'country'    => $this->getCountry(),
-            'p_info'     => $this->getPInfo(),
-            'p_email'    => $this->getPEmail()
+            'URLC' => $this->getNotifyUrl(),
+            'control' => $this->getControl(),
+            'firstname' => $this->getFirstName(),
+            'lastname' => $this->getLastName(),
+            'email' => $this->getEmail(),
+            'street' => $this->getStreet(),
+            'street_n1' => $this->getStreetN1(),
+            'street_n2' => $this->getStreetN2(),
+            'state' => $this->getState(),
+            'addr3' => $this->getAddr3(),
+            'city' => $this->getCity(),
+            'postcode' => $this->getPostcode(),
+            'phone' => $this->getPhone(),
+            'country' => $this->getCountry(),
+            'p_info' => $this->getPInfo(),
+            'p_email' => $this->getPEmail()
         );
 
         foreach ($additional as $key => $value) {
