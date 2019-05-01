@@ -3,6 +3,7 @@
 namespace Omnipay\Dotpay\Message;
 
 use Omnipay\Common\Message\AbstractRequest;
+use Omnipay\Dotpay\ChkGenerator;
 
 /**
  * Dotpay Purchase Request.
@@ -296,6 +297,8 @@ class Request extends AbstractRequest
                 $data[$key] = $value;
             }
         }
+
+        $data['chk'] = ChkGenerator::generateChk($this->getAccountId(), $this->getPid(), $data);
 
         return $data;
     }
