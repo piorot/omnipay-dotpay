@@ -9,7 +9,7 @@ use Omnipay\Dotpay\Message\Request;
 
 /**
  * Dotpay Gateway.
- * @link https://ssl.dotpay.pl/s2/login/cloudfs1/magellan_media/common_file/55acab1fdadfce6f45d351ee/dotpay_instrukcja_techniczna_1.23.9.1_pl.pdf
+ * @link http://www.dotpay.pl/dla-developerow/
  */
 class Gateway extends AbstractGateway
 {
@@ -200,8 +200,6 @@ class Gateway extends AbstractGateway
 
     /**
      * Set channel payment.
-     * More info in
-     * {@link https://ssl.dotpay.pl/s2/login/cloudfs1/magellan_media/common_file/55acab1fdadfce6f45d351ee/dotpay_instrukcja_techniczna_1.23.9.1_pl.pdf Dotpay documentation }
      *
      * @param $value
      *
@@ -223,8 +221,6 @@ class Gateway extends AbstractGateway
 
     /**
      * Set channel groups.
-     * More info in
-     * {@link https://ssl.dotpay.pl/s2/login/cloudfs1/magellan_media/common_file/55acab1fdadfce6f45d351ee/dotpay_instrukcja_techniczna_1.23.9.1_pl.pdf Dotpay documentation }
      *
      * @param $value
      *
