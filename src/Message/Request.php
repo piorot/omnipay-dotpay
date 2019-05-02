@@ -316,7 +316,6 @@ class Request extends AbstractRequest
 
     public function getPostData()
     {
-
     }
 
     public function sendData($data)

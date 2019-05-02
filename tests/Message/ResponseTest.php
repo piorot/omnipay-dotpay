@@ -1,6 +1,6 @@
 <?php
 
-namespace Omnipay\TwoCheckout\Message;
+namespace Omnipay\Dotpay\Message;
 
 use Omnipay\Tests\TestCase;
 
@@ -10,7 +10,7 @@ class ResponseTest extends TestCase
     {
         $data = array('sid' => '12345', 'total' => '10.00');
 
-        $mock = $this->getMockBuilder('\Omnipay\TwoCheckout\Message\Request')
+        $mock = $this->getMockBuilder(Request::class)
             ->disableOriginalConstructor()
             ->getMock();
 
