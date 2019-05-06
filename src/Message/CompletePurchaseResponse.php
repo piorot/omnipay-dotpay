@@ -3,12 +3,19 @@
 namespace Omnipay\Dotpay\Message;
 
 use Omnipay\Common\Message\AbstractResponse;
+use Omnipay\Common\Message\NotificationInterface;
+use Omnipay\Common\Message\RequestInterface;
 
 /**
  * Dotpay Complete Purchase Response.
  */
-class CompletePurchaseResponse extends AbstractResponse
+class CompletePurchaseResponse extends AbstractResponse implements NotificationInterface
 {
+    /**
+     * @var bool
+     */
+    private $signatureValid;
+
     /**
      * Ok transaction status.
      */
@@ -19,49 +26,19 @@ class CompletePurchaseResponse extends AbstractResponse
      */
     const STATUS_FAIL = 'FAIL';
 
-    /**
-     * Completed transaction status from Dotpay response.
-     */
     const OPERATION_STATUS_COMPLETED = 'completed';
+    const OPERATION_STATUS_NEW = 'new';
+    const OPERATION_STATUS_REJECTED = 'rejected';
+    const OPERATION_STATUS_PROCESSING_REALIZATION_WAITING = 'processing_realization_waiting';
+    const OPERATION_STATUS_PROCESSING_REALIZATION = 'processing_realization';
 
     /**
-     * Validate signature from Dotpay response
-     * and return transaction status.
-     *
-     * @param array $data
-     *
-     * @return OK | FAIL string
+     * @inheritdoc
      */
-    public function validateSignature($data)
+    public function __construct(RequestInterface $request, $data, $signatureValid)
     {
-        $string = $data['pid'].
-            (isset($data['id']) ? $data['id'] : '').
-            (isset($data['operation_number']) ? $data['operation_number'] : '').
-            (isset($data['operation_type']) ? $data['operation_type'] : '').
-            (isset($data['operation_status']) ? $data['operation_status'] : '').
-            (isset($data['operation_amount']) ? $data['operation_amount'] : '').
-            (isset($data['operation_currency']) ? $data['operation_currency'] : '').
-            (isset($data['operation_withdrawal_amount']) ? $data['operation_withdrawal_amount'] : '').
-            (isset($data['operation_commission_amount']) ? $data['operation_commission_amount'] : '').
-            (isset($data['operation_original_amount']) ? $data['operation_original_amount'] : '').
-            (isset($data['operation_original_currency']) ? $data['operation_original_currency'] : '').
-            (isset($data['operation_datetime']) ? $data['operation_datetime'] : '').
-            (isset($data['operation_related_number']) ? $data['operation_related_number'] : '').
-            (isset($data['control']) ? $data['control'] : '').
-            (isset($data['description']) ? $data['description'] : '').
-            (isset($data['email']) ? $data['email'] : '').
-            (isset($data['p_info']) ? $data['p_info'] : '').
-            (isset($data['p_email']) ? $data['p_email'] : '').
-            (isset($data['channel']) ? $data['channel'] : '').
-            (isset($data['channel_country']) ? $data['channel_country'] : '').
-            (isset($data['geoip_country']) ? $data['geoip_country'] : '');
-
-        if (hash('sha256', $string) === $data['signature'] &&
-            $data['operation_status'] === self::OPERATION_STATUS_COMPLETED) {
-            return self::STATUS_OK;
-        } else {
-            return self::STATUS_FAIL;
-        }
+        parent::__construct($request, $data);
+        $this->signatureValid = $signatureValid;
     }
 
     /**
@@ -70,11 +47,7 @@ class CompletePurchaseResponse extends AbstractResponse
      */
     public function isSuccessful()
     {
-        if (!isset($this->data['status'])) {
-            $this->data['status'] = $this->validateSignature($this->data);
-        }
-
-        return $this->data['status'] === self::STATUS_OK ? true : false;
+        return $this->signatureValid;
     }
 
     /**
@@ -83,5 +56,40 @@ class CompletePurchaseResponse extends AbstractResponse
     public function getTransactionReference()
     {
         return isset($this->data['operation_number']) ? $this->data['operation_number'] : '';
+    }
+
+    /**
+     * @inheritdoc
+     */
+    public function getMessage()
+    {
+        return $this->isSuccessful() ? self::STATUS_OK : self::STATUS_FAIL;
+    }
+
+    /**
+     * @inheritdoc
+     */
+    public function getCode()
+    {
+        return $this->isSuccessful() ? 200 : 400;
+    }
+
+    /**
+     * @inheritdoc
+     */
+    public function getTransactionStatus()
+    {
+        switch ($this->data['operation_status']) {
+            case self::OPERATION_STATUS_COMPLETED:
+                return NotificationInterface::STATUS_COMPLETED;
+
+            case self::OPERATION_STATUS_REJECTED:
+                return NotificationInterface::STATUS_FAILED;
+
+            case self::OPERATION_STATUS_NEW:
+            case self::OPERATION_STATUS_PROCESSING_REALIZATION:
+            case self::OPERATION_STATUS_PROCESSING_REALIZATION_WAITING:
+                return NotificationInterface::STATUS_PENDING;
+        }
     }
 }

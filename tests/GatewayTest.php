@@ -43,9 +43,14 @@ class GatewayTest extends GatewayTestCase
 
     public function testCompletePurchaseSuccess()
     {
+        $data = array(
+            'status' => 'OK',
+            'operation_number' => 'OPERATION-1',
+        );
+
         $this->getHttpRequest()->request->replace(
-            array(
-                'status'=>'OK'
+            $data + array(
+                'signature' => ChkGenerator::generateSignature($this->gateway->getPid(), $data),
             )
         );
 
@@ -53,7 +58,8 @@ class GatewayTest extends GatewayTestCase
 
         $this->assertTrue($response->isSuccessful());
         $this->assertFalse($response->isRedirect());
-        $this->assertEmpty($response->getTransactionReference());
-        $this->assertNull($response->getMessage());
+        $this->assertSame('OPERATION-1', $response->getTransactionReference());
+        $this->assertSame('OK', $response->getMessage());
+        $this->assertSame(200, $response->getCode());
     }
 }

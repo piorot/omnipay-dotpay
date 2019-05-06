@@ -69,4 +69,31 @@ class ChkGenerator
 
         return hash('sha256', $chain);
     }
+
+    public static function generateSignature($pid, $params)
+    {
+        $chain = $pid.
+            (isset($params['id']) ? $params['id'] : '').
+            (isset($params['operation_number']) ? $params['operation_number'] : '').
+            (isset($params['operation_type']) ? $params['operation_type'] : '').
+            (isset($params['operation_status']) ? $params['operation_status'] : '').
+            (isset($params['operation_amount']) ? $params['operation_amount'] : '').
+            (isset($params['operation_currency']) ? $params['operation_currency'] : '').
+            (isset($params['operation_withdrawal_amount']) ? $params['operation_withdrawal_amount'] : '').
+            (isset($params['operation_commission_amount']) ? $params['operation_commission_amount'] : '').
+            (isset($params['operation_original_amount']) ? $params['operation_original_amount'] : '').
+            (isset($params['operation_original_currency']) ? $params['operation_original_currency'] : '').
+            (isset($params['operation_datetime']) ? $params['operation_datetime'] : '').
+            (isset($params['operation_related_number']) ? $params['operation_related_number'] : '').
+            (isset($params['control']) ? $params['control'] : '').
+            (isset($params['description']) ? $params['description'] : '').
+            (isset($params['email']) ? $params['email'] : '').
+            (isset($params['p_info']) ? $params['p_info'] : '').
+            (isset($params['p_email']) ? $params['p_email'] : '').
+            (isset($params['channel']) ? $params['channel'] : '').
+            (isset($params['channel_country']) ? $params['channel_country'] : '').
+            (isset($params['geoip_country']) ? $params['geoip_country'] : '');
+
+        return hash('sha256', $chain);
+    }
 }
