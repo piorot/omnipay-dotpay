@@ -2,6 +2,8 @@
 
 namespace Omnipay\Dotpay\Message;
 
+use Omnipay\Dotpay\ChkGenerator;
+
 /**
  * Dotpay Complete Purchase Request.
  */
@@ -25,8 +27,20 @@ class CompletePurchaseRequest extends Request
      */
     public function sendData($data)
     {
-        $data['pid'] = $this->getPid();
+        $signatureValid = $this->validateSignature($data);
+        return $this->response = new CompletePurchaseResponse($this, $data, $signatureValid);
+    }
 
-        return $this->response = new CompletePurchaseResponse($this, $data);
+    /**
+     * Validate signature from Dotpay response
+     * and return transaction status.
+     *
+     * @param array $data
+     *
+     * @return bool
+     */
+    private function validateSignature($data)
+    {
+        return ChkGenerator::generateSignature($this->getPid(), $data) === $data['signature'];
     }
 }
