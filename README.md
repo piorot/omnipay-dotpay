@@ -10,7 +10,7 @@ to your `composer.json` file:
 ```json
 {
     "require": {
-        "omnipay/dotpay": "~2.0"
+        "omnipay/dotpay": "~3.0"
     }
 }
 ```
