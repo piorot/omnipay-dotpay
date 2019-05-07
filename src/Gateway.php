@@ -9,7 +9,7 @@ use Omnipay\Dotpay\Message\Request;
 
 /**
  * Dotpay Gateway.
- * @link http://www.dotpay.pl/dla-developerow/
+ * @link http://www.dotpay.pl/developer/
  */
 class Gateway extends AbstractGateway
 {
