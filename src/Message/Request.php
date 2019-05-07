@@ -3,6 +3,7 @@
 namespace Omnipay\Dotpay\Message;
 
 use Omnipay\Common\Message\AbstractRequest;
+use Omnipay\Dotpay\ChkGenerator;
 
 /**
  * Dotpay Purchase Request.
@@ -77,6 +78,16 @@ class Request extends AbstractRequest
     public function setChannel($value)
     {
         return $this->setParameter('channel', $value);
+    }
+
+    public function getChannelGroups()
+    {
+        return $this->getParameter('channel_groups');
+    }
+
+    public function setChannelGroups($value)
+    {
+        return $this->setParameter('channel_groups', $value);
     }
 
     public function getChLock()
@@ -254,18 +265,13 @@ class Request extends AbstractRequest
         return $this->getParameter('status');
     }
 
-    public function purchase(array $parameters = array())
-    {
-        return $this->createRequest('\Omnipay\TwoCheckout\Message\Request', $parameters);
-    }
-
     public function getData()
     {
         $this->validate('amount');
 
         $data = array(
-            'id' => (int) $this->getAccountId(),
-            'amount' => (float) $this->getAmount(),
+            'id' => (int)$this->getAccountId(),
+            'amount' => (float)$this->getAmount(),
             'currency' => $this->getCurrency(),
             'description' => $this->getDescription(),
             'lang' => $this->getLang(),
@@ -274,9 +280,10 @@ class Request extends AbstractRequest
 
         $additional = array(
             'channel' => $this->getChannel(),
+            'channel_groups' => $this->getChannelGroups(),
             'ch_lock' => $this->getChLock(),
             'URL' => $this->getReturnUrl(),
-            'type' => (string) $this->getType(),
+            'type' => (string)$this->getType(),
             'buttontext' => $this->getButtonText(),
             'URLC' => $this->getNotifyUrl(),
             'control' => $this->getControl(),
@@ -292,20 +299,23 @@ class Request extends AbstractRequest
             'postcode' => $this->getPostcode(),
             'phone' => $this->getPhone(),
             'country' => $this->getCountry(),
-            'p_info' => (int) $this->getAccountId(),
+            'p_info' => $this->getPInfo(),
             'p_email' => $this->getPEmail()
         );
 
         foreach ($additional as $key => $value) {
-            if ($value!='') {
+            if ($value != '') {
                 $data[$key] = $value;
             }
         }
 
+        $data['chk'] = ChkGenerator::generateChk($this->getAccountId(), $this->getPid(), $data);
+
         return $data;
     }
 
-    public function getPostData() {
+    public function getPostData()
+    {
 
     }
 
