@@ -3,10 +3,10 @@
 
 namespace Omnipay\Dotpay;
 
-
 class ChkGenerator
 {
-    public static function generateChk($accountId, $pid, $params) {
+    public static function generateChk($accountId, $pid, $params)
+    {
         $params['id'] = $accountId;
         $chain =
             $pid.

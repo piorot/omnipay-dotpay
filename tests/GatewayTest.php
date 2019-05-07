@@ -1,11 +1,14 @@
 <?php
 
-namespace Omnipay\TwoCheckout;
+namespace Omnipay\Dotpay;
 
 use Omnipay\Tests\GatewayTestCase;
 
 class GatewayTest extends GatewayTestCase
 {
+    /** @var Gateway */
+    protected $gateway;
+
     public function setUp()
     {
         parent::setUp();
@@ -50,7 +53,7 @@ class GatewayTest extends GatewayTestCase
 
         $this->assertTrue($response->isSuccessful());
         $this->assertFalse($response->isRedirect());
-        $this->assertNull($response->getTransactionReference());
+        $this->assertEmpty($response->getTransactionReference());
         $this->assertNull($response->getMessage());
     }
 }

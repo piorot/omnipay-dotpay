@@ -82,6 +82,6 @@ class CompletePurchaseResponse extends AbstractResponse
      */
     public function getTransactionReference()
     {
-        return $this->data['operation_number'] ?? '';
+        return isset($this->data['operation_number']) ? $this->data['operation_number'] : '';
     }
 }

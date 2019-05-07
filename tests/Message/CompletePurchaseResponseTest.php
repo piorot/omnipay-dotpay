@@ -1,6 +1,6 @@
 <?php
 
-namespace Omnipay\TwoCheckout\Message;
+namespace Omnipay\Dotpay\Message;
 
 use Omnipay\Tests\TestCase;
 
@@ -12,7 +12,7 @@ class CompletePurchaseResponseTest extends TestCase
 
         $this->assertTrue($response->isSuccessful());
         $this->assertFalse($response->isRedirect());
-        $this->assertNull($response->getTransactionReference());
+        $this->assertEmpty($response->getTransactionReference());
         $this->assertNull($response->getMessage());
     }
 
