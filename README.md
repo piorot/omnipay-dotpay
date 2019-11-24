@@ -10,7 +10,7 @@ to your `composer.json` file:
 ```json
 {
     "require": {
-        "omnipay/dotpay": "~2.0"
+        "omnipay/dotpay": "~3.0"
     }
 }
 ```
@@ -39,7 +39,7 @@ $gateway = Omnipay::create('Dotpay');
 $gateway->initialize([
     'accountId'  => 'YOUR_DOTPAY_ID',
     'pid'        => 'YOUR_SECRET_PIN',
-    'type'       => '3',
+    'type'       => '0',
     'action'     => 'https://ssl.dotpay.pl/test_payment/',
     'lang'       => 'pl',
     'apiVersion' => 'dev',
