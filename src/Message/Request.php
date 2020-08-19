@@ -260,6 +260,26 @@ class Request extends AbstractRequest
         return $this->setParameter('p_email', $value);
     }
 
+    public function getBylaw()
+    {
+        return $this->getParameter('bylaw');
+    }
+
+    public function setBylaw($value)
+    {
+        return $this->setParameter('bylaw', $value);
+    }
+
+    public function getPersonalData()
+    {
+        return $this->getParameter('personal_data');
+    }
+
+    public function setPersonalData($value)
+    {
+        return $this->setParameter('personal_data', $value);
+    }
+
     public function getStatus()
     {
         return $this->getParameter('status');
@@ -300,7 +320,9 @@ class Request extends AbstractRequest
             'phone' => $this->getPhone(),
             'country' => $this->getCountry(),
             'p_info' => $this->getPInfo(),
-            'p_email' => $this->getPEmail()
+            'p_email' => $this->getPEmail(),
+            'bylaw' => $this->getBylaw(),
+            'personal_data' => $this->getPersonalData(),
         );
 
         foreach ($additional as $key => $value) {
