@@ -29,9 +29,9 @@ class RequestTest extends TestCase
         $this->assertEquals($requestData['description'], 'description for payment');
         $this->assertEquals($requestData['lang'], 'es');
         $this->assertEquals($requestData['type'], 100);
-        $this->assertEquals($requestData['URL'], 'http://example.com/return');
-        $this->assertEquals($requestData['URLC'], 'http://example.com/notify');
-        $this->assertEquals($requestData['channel'], 321);
+        $this->assertEquals($requestData['url'], 'http://example.com/return');
+        $this->assertEquals($requestData['urlc'], 'http://example.com/notify');
+        $this->assertEquals($requestData['channel'], 1);
         $this->assertEquals($requestData['chk'], 'c0f78147d4c64739fd3ad5e723b8434a10d90a9f4fc64b4cd3a5ba1df1f2e60c');
     }
 
@@ -39,10 +39,10 @@ class RequestTest extends TestCase
     {
         $request = new Request($this->getHttpClient(), $this->getHttpRequest());
 
-        $request->setAccountId(123456);
-        $request->setType(100);
-        $request->setAmount(10.00);
-        $request->setCurrency('JPY');
+        $request->setAccountId('123456');
+        $request->setType(4);
+        $request->setAmount('10.00');
+        $request->setCurrency('PLN');
         $request->setDescription('description for payment');
         $request->setReturnUrl('http://example.com/return');
         $request->setNotifyUrl('http://example.com/notify');
@@ -50,7 +50,7 @@ class RequestTest extends TestCase
         $request->setLang('es');
         $request->setApiVersion('prog');
         $request->setChannel(321);
-        $request->setChannelGroups("P,K");
+        $request->setChannelGroups("P,K,T");
         $request->setChLock("1");
         $request->setButtonText("Button Text");
         $request->setFirstName("firstname");
@@ -63,7 +63,7 @@ class RequestTest extends TestCase
         $request->setCity("City");
         $request->setPostcode("00-000");
         $request->setPhone("123-456-789");
-        $request->setCountry("pl");
+        $request->setCountry("PL");
         $request->setPInfo("P INFO");
         $request->setPEmail("pemail@example.com");
         $request->setBylaw('1');
@@ -71,18 +71,18 @@ class RequestTest extends TestCase
 
         $requestData = $request->getData();
 
-        $this->assertEquals($requestData['id'], 123456);
-        $this->assertEquals($requestData['amount'], 10.00);
+        $this->assertEquals($requestData['id'], '123456');
+        $this->assertEquals($requestData['amount'], '10.00');
         $this->assertEquals($requestData['currency'], 'JPY');
         $this->assertEquals($requestData['description'], 'description for payment');
-        $this->assertEquals($requestData['URL'], 'http://example.com/return');
-        $this->assertEquals($requestData['URLC'], 'http://example.com/notify');
-
-        $this->assertEquals($requestData['lang'], 'es');
-        $this->assertEquals($requestData['type'], 100);
-        $this->assertEquals($requestData['channel'], 321);
-        $this->assertEquals($requestData['channel_groups'], "P,K");
-        $this->assertEquals($requestData['ch_lock'], "1");
+        $this->assertEquals($requestData['url'], 'http://example.com/return');
+        $this->assertEquals($requestData['urlc'], 'http://example.com/notify');
+        $this->assertEquals($requestData['control'], '34f34d34fd89sd');
+        $this->assertEquals($requestData['lang'], 'en');
+        $this->assertEquals($requestData['type'], 4);
+        $this->assertEquals($requestData['channel'], 2);
+        $this->assertEquals($requestData['channel_groups'], "P,K,T");
+        $this->assertEquals($requestData['ch_lock'], "0");
         $this->assertEquals($requestData['buttontext'], "Button Text");
         $this->assertEquals($requestData['firstname'], "firstname");
         $this->assertEquals($requestData['lastname'], "lastname");
@@ -94,7 +94,7 @@ class RequestTest extends TestCase
         $this->assertEquals($requestData['city'], "City");
         $this->assertEquals($requestData['postcode'], "00-000");
         $this->assertEquals($requestData['phone'], "123-456-789");
-        $this->assertEquals($requestData['country'], "pl");
+        $this->assertEquals($requestData['country'], "PL");
         $this->assertEquals($requestData['p_info'], "P INFO");
         $this->assertEquals($requestData['p_email'], "pemail@example.com");
         $this->assertEquals($requestData['bylaw'], "1");
