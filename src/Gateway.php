@@ -40,7 +40,7 @@ class Gateway extends AbstractGateway
             'type'       => '0',
             'action'     => 'https://ssl.dotpay.pl/test_payment/',
             'lang'       => 'pl',
-            'apiVersion' => 'dev',
+            'apiVersion' => 'next',
             'channel'    => 123
         );
     }

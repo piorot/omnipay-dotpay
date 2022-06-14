@@ -290,8 +290,8 @@ class Request extends AbstractRequest
         $this->validate('amount');
 
         $data = array(
-            'id' => (int)$this->getAccountId(),
-            'amount' => (float)$this->getAmount(),
+            'id' => (string)$this->getAccountId(),
+            'amount' => (string)$this->getAmount(),
             'currency' => $this->getCurrency(),
             'description' => $this->getDescription(),
             'lang' => $this->getLang(),
@@ -331,7 +331,7 @@ class Request extends AbstractRequest
             }
         }
 
-        $data['chk'] = ChkGenerator::generateChk($this->getAccountId(), $this->getPid(), $data);
+        $data['chk'] = ChkGenerator::generateChk($this->getPid(), $data);
 
         return $data;
     }

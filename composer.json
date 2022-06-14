@@ -22,7 +22,8 @@
         "psr-4": { "Omnipay\\Dotpay\\" : "src/" }
     },
     "require": {
-        "omnipay/common": "~3.0"
+        "omnipay/common": "~3.0",
+        "ext-json": "*"
     },
     "require-dev": {
         "omnipay/tests": "~3.0",

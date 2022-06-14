@@ -19,7 +19,7 @@ class GatewayTest extends GatewayTestCase
         $this->gateway->setType(0);
         $this->gateway->setAction('https://ssl.dotpay.pl/test_payment/');
         $this->gateway->setLang('pl');
-        $this->gateway->setApiVersion('dev');
+        $this->gateway->setApiVersion('next');
         $this->gateway->setChannel(123);
 
         $this->options = array(
